@@ -1,5 +1,5 @@
 {
-  "name": "node-oscsocket",
+  "name": "oscsocket",
   "version": "0.0.1",
   "description": "OscSocket for node.js",
   "main": "./index.js",
@@ -23,6 +23,10 @@
   },
   "homepage": "https://github.com/hrfm/node-oscsocket",
   "devDependencies": {
+    "events": "^1.0.2",
+    "util": "^0.10.3"
+  },
+  "dependencies": {
     "events": "^1.0.2",
     "util": "^0.10.3"
   }
