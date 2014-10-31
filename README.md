@@ -32,7 +32,7 @@ msg.addArgument("s", "String value." );
 ### 3. Send
 
 ```javascript
-oscSocket.send( msg, "127.0.0.1", 10000 );
+sock.send( msg, "127.0.0.1", 10000 );
 ```
 
 ### 4. Receive
@@ -40,13 +40,21 @@ oscSocket.send( msg, "127.0.0.1", 10000 );
 Bind receive address:port.
 
 ```javascript
-oscSocket.bind( 10000, "127.0.0.1" );
+sock.bind( 10000, "127.0.0.1" );
 ```
 
 Add listener by address.
 
 ```javascript
 oscSocket.on( "/osc/message/address", function(message){
+  console.log(message);
+});
+```
+
+or use wildcard *.
+
+```javascript
+oscSocket.on( "/osc/message/*", function(message){
   console.log(message);
 });
 ```
