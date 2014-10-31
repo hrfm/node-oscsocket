@@ -25,7 +25,7 @@
 
 // --- import ----------------------------------
 
-var jspack = require('./jspack/jspack').jspack;
+var jspack = require('../lib/jspack/jspack').jspack;
 
 // --- Class ----------------------------------
 

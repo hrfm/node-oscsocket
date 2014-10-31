@@ -1,3 +1,5 @@
-exports.OSCSocket  = require('./lib/OSCSocket');
-exports.OSCMessage = require('./lib/OSCMessage');
-exports.OSCBundle  = require('./lib/OSCBundle');
+module.exports = {
+	OSCSocket  : require('./src/OSCSocket'),
+	OSCMessage : require('./src/OSCMessage'),
+	OSCBundle  : require('./src/OSCBundle')
+};
