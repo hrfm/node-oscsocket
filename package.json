@@ -1,0 +1,28 @@
+{
+  "name": "node-oscsocket",
+  "version": "0.0.0",
+  "description": "OscSocket for node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hrfm/node-oscsocket.git"
+  },
+  "keywords": [
+    "osc",
+    "socket",
+    "communication"
+  ],
+  "author": "hrfm <hrfm0818@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hrfm/node-oscsocket/issues"
+  },
+  "homepage": "https://github.com/hrfm/node-oscsocket",
+  "devDependencies": {
+    "events": "^1.0.2",
+    "util": "^0.10.3"
+  }
+}
