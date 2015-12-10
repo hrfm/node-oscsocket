@@ -1,6 +1,6 @@
 {
   "name": "oscsocket",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "OscSocket for node.js",
   "main": "./index.js",
   "scripts": {

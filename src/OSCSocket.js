@@ -58,7 +58,7 @@ var OSCSocket = module.exports = function( localPort, localAddress ){
         if( typeof localPort !== "undefined" && typeof localAddress !== "undefined" ){
             this.bind( localPort, localAddress );
         }
-        
+
     };
     
     // ------- PUBLIC ----------------------------------------------------
@@ -342,6 +342,7 @@ var OSCSocket = module.exports = function( localPort, localAddress ){
             }
             
             var obj = this._eventObjectCache[typeStr];
+            obj.address    = list.address;
             obj.srcAddress = srcAddress;
             obj.srcPort    = srcPort;
             obj.address    = "/"+address.join("/");
