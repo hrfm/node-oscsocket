@@ -55,10 +55,10 @@ var OSCSocket = module.exports = function( localPort, localAddress ){
         this._socket.on('error',function(err){ self._onError.apply( self, [err] ); });
         this._socket.on('close',function(){ self._onClose.apply(); });
 
-        if( localPort && localAddress ){
+        if( typeof localPort !== "undefined" && typeof localAddress !== "undefined" ){
             this.bind( localPort, localAddress );
         }
-
+        
     };
     
     // ------- PUBLIC ----------------------------------------------------
