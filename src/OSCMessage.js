@@ -146,9 +146,9 @@ var OSCMessage = module.exports = function( oscString ){
     }
 
     OSCMessage.prototype.toString = function toString(){
-        return this._address + " ," + this._types + this._values.join(" ");
+        return this._address + " " + this._types + " " + this._values.join(" ");
     }
-
+    
 	// ------- PROTECTED ---------------------------------------------------
 
     /**
