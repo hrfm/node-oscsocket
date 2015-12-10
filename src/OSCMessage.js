@@ -144,11 +144,11 @@ var OSCMessage = module.exports = function( oscString ){
         this._updated = true;
 
     }
-    
-    OSCMessage.prototype.toString() = function toString(){
+
+    OSCMessage.prototype.toString = function toString(){
         return this._address + " ," + this._types + this._values.join(" ");
     }
-    
+
 	// ------- PROTECTED ---------------------------------------------------
 
     /**
