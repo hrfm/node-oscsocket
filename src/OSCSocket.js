@@ -342,7 +342,6 @@ var OSCSocket = module.exports = function( localPort, localAddress ){
             }
             
             var obj = this._eventObjectCache[typeStr];
-            obj.address    = list.address;
             obj.srcAddress = srcAddress;
             obj.srcPort    = srcPort;
             obj.address    = "/"+address.join("/");
