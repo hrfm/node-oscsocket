@@ -95,13 +95,8 @@ var OSCSocket = module.exports = function(){
 
       var self     = this;
       var options  = {};
-      var callback = [];
+      var callback = undefined;
 
-      if( this._useBroadcast === true ){
-        //callback.push(function(){
-          //self._socket.setBroadcast(true);
-        //});
-      }
       if( typeof arguments[0] === "function" ){
         callback.push( arguments[0] );
       }else if( typeof arguments[0] === "object" ){
@@ -110,16 +105,12 @@ var OSCSocket = module.exports = function(){
         options["port"]    = arguments[0];
         options["address"] = arguments[1];
         if( typeof arguments[2] === "function" ){
-          callback.push( arguments[2] );
+          callback = arguments[2];
         }
       }
 
-      if( 0 < callback.length ){
-        this._socket.bind( options, function(){
-          for( var i=0; i<callback.length; i++ ){
-            callback[i]();
-          }
-        });
+      if( typeof callback !== "undefined" ){
+        this._socket.bind( options, callback );
       }else{
         this._socket.bind( options );
       }
