@@ -34,7 +34,7 @@ var events     = require('events')
 
 // --- Class ----------------------------------
 
-var OSCSocket = module.exports = function( localPort, localAddress ){
+var OSCSocket = module.exports = function(){
         
         // --- create EventEmitt functions.
         this._emitter = new events.EventEmitter();
@@ -55,14 +55,18 @@ var OSCSocket = module.exports = function( localPort, localAddress ){
         this._socket.on('error',function(err){ self._onError.apply( self, [err] ); });
         this._socket.on('close',function(){ self._onClose.apply(); });
 
-        if( typeof localPort !== "undefined" && typeof localAddress !== "undefined" ){
-            this.bind( localPort, localAddress );
-        }
-
     };
     
     // ------- PUBLIC ----------------------------------------------------
 
+    /** ブロードキャストを有効にします. */
+    OSCSocket.prototype.useBroadcast = function useBroadcast(flag){
+      if( typeof flag === "undefined" ){
+        flag = true;
+      }
+      this._useBroadcast = flag;
+    };
+    
     /** 接続に利用している DatagramSocket への参照を取得します. */
     OSCSocket.prototype.__defineGetter__('socket',function(){
         return this._socket;
@@ -84,17 +88,40 @@ var OSCSocket = module.exports = function( localPort, localAddress ){
     });
 
     /**
-     * 指定されたローカルのアドレスおよびポートにこのソケットをバインドします。
-     * @param    localPort
-     * @param    localAddress
+     * 指定された方法でソケットをバインドします。
      */
-    OSCSocket.prototype.bind = function( localPort, localAddress ){
-        
-        if( typeof localPort === "undefined" ) localPort = 0;
-        if( typeof localAddress === "undefined" ) localPort = "0.0.0.0";
-        
-        console.log("OSCSocket.bind(" + localAddress + ":" + localPort + ")");
-        this._socket.bind( localPort, localAddress );
+    OSCSocket.prototype.bind = function(){
+
+      var self     = this;
+      var options  = {};
+      var callback = [];
+
+      if( this._useBroadcast === true ){
+        callback.push(function(){
+          self._socket.setBroadcast(true);
+        });
+      }
+      if( typeof arguments[0] === "function" ){
+        callback.push( arguments[0] );
+      }else if( typeof arguments[0] === "object" ){
+        options = arguments[0];
+      }else if( typeof arguments[0] === "number" ){
+        options["port"]    = arguments[0];
+        options["address"] = arguments[1];
+        if( typeof arguments[2] === "function" ){
+          callback.push( arguments[2] );
+        }
+      }
+
+      if( 0 < callback.length ){
+        this._socket.bind( options, function(){
+          for( var i=0; i<callback.length; i++ ){
+            callback[i]();
+          }
+        });
+      }else{
+        this._socket.bind( options );
+      }
 
     }
 
@@ -163,7 +190,7 @@ var OSCSocket = module.exports = function( localPort, localAddress ){
         this._bound = true;
         console.log("OSCSocket listening " + address.address + ":" + address.port);
     }
-
+    
     /**
      * 通信メッセージを受信した際に実行されるハンドラ.
      * データの 8byte を調べ, bundle かを判断し処理を切り替える.

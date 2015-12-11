@@ -18,6 +18,7 @@ Require oscsocket and create OscSocket instance.
 ```javascript
 var osc = require('oscsocket');
 var sock = new osc.OscSocket();
+sock.bind();
 ```
 
 ### 2. Create OSCMessage.
@@ -27,6 +28,12 @@ var msg = new osc.OSCMessage();
 msg.address = "/osc/message/address";
 msg.addArgument("i", 100 );
 msg.addArgument("s", "String value." );
+```
+
+or
+
+```javascript
+var msg = new osc.OSCMessage("/osc/message/address ,is 100 TextValue";
 ```
 
 ### 3. Send
@@ -51,7 +58,7 @@ oscSocket.on( "/osc/message/address", function(message){
 });
 ```
 
-or use wildcard *.
+or use *.
 
 ```javascript
 oscSocket.on( "/osc/message/*", function(message){
@@ -59,12 +66,22 @@ oscSocket.on( "/osc/message/*", function(message){
 });
 ```
 
+### 5. Broadcast
+
+```javascript
+var osc = require('oscsocket');
+var sock = new osc.OscSocket();
+sock.useBroadcast();
+sock.bind();
+sock.send( msg, "127.0.0.1", 10000 );
+```
+
 API
 -----
 
 ## OSCSocket
 
-### OSCSocket.bind( port, address );
+### OSCSocket.bind( port, address, callback );
 
 Bind and listen OSC messages on address:port.
 
@@ -78,6 +95,23 @@ Type: `String`
 
 Listen address.  
 ex) `127.0.0.1`, `localhost`
+
+#### callback
+Type: `Function`
+
+### OSCSocket.bind( options, callback );
+
+#### options
+Type: `Object`
+
+```javascript
+{
+	'port'    : 1000
+	'address' : '0.0.0.0'
+}
+```
+
+### OSCSocket.useBroadcast();
 
 ### OSCSocket.send( packet, address, port );
 

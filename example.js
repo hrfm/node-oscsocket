@@ -9,7 +9,11 @@ var sendAddr = 'localhost'
 // ===================================
 // Create Listener.
 
-var oscSocket = new osc.OSCSocket( bindPort, bindAddr );
+var oscSocket = new osc.OSCSocket();
+oscSocket.bind({
+	"port"    : bindPort,
+	"address" : bindAddr
+});
 
 // ===================================
 // Receive /test address osc messages.
