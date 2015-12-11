@@ -128,12 +128,14 @@ var OSCSocket = module.exports = function(){
     /**
      * OSCメッセージを送信します.
      * @param    packet  送信する OSCPacket.
-     * @param    address 送信先アドレス.
      * @param    port    送信先ポート.
+     * @param    address 送信先アドレス.
+     * @param    callback
      */
-    OSCSocket.prototype.send = function( packet, address, port ) {
-        var buf = packet.buffer;
-        this._socket.send( buf, 0, buf.length, port, address );
+    OSCSocket.prototype.send = function( packet, port, address, callback ) {
+      if( typeof address === "undefined" ){ address == "0.0.0.0" }
+      var buf = packet.buffer;
+      this._socket.send( buf, 0, buf.length, port, address, callback );
     }
 
     /**
@@ -190,7 +192,7 @@ var OSCSocket = module.exports = function(){
         this._bound = true;
         console.log("OSCSocket listening " + address.address + ":" + address.port);
     }
-    
+
     /**
      * 通信メッセージを受信した際に実行されるハンドラ.
      * データの 8byte を調べ, bundle かを判断し処理を切り替える.

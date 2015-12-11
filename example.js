@@ -45,5 +45,5 @@ setTimeout(function(){
 	var oscMsg = new osc.OSCMessage();
 	oscMsg.address = "/test/a";
 	oscMsg.addArgument("i", 100 );
-	oscSocket.send( oscMsg, sendAddr, sendPort );
+	oscSocket.send( oscMsg, sendPort, sendAddr );
 },3000);
