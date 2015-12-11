@@ -40,7 +40,8 @@ var OSCSocket = module.exports = function(){
         this._emitter = new events.EventEmitter();
         
         // --- init Properties.
-        this._bound = false;
+        this._bound            = false;
+        this._useBroadcast     = false;
         this._addressTree      = {};
         this._objectDictionary = {};
         this._eventObjectCache = {};
@@ -54,17 +55,17 @@ var OSCSocket = module.exports = function(){
         this._socket.on('message',function(msg, rinfo){ self._onMessage.apply( self, [ msg, rinfo ] ); });
         this._socket.on('error',function(err){ self._onError.apply( self, [err] ); });
         this._socket.on('close',function(){ self._onClose.apply(); });
-
+        
     };
     
     // ------- PUBLIC ----------------------------------------------------
 
     /** ブロードキャストを有効にします. */
-    OSCSocket.prototype.useBroadcast = function useBroadcast(flag){
-      if( typeof flag === "undefined" ){
-        flag = true;
+    OSCSocket.prototype.setBroadcast = function setBroadcast(flag){
+      this._useBroadcast = (flag==true);
+      if( this._useBroadcast && this._bound ){
+        this._socket.setBroadcast(flag);
       }
-      this._useBroadcast = flag;
     };
     
     /** 接続に利用している DatagramSocket への参照を取得します. */
@@ -97,9 +98,9 @@ var OSCSocket = module.exports = function(){
       var callback = [];
 
       if( this._useBroadcast === true ){
-        callback.push(function(){
-          self._socket.setBroadcast(true);
-        });
+        //callback.push(function(){
+          //self._socket.setBroadcast(true);
+        //});
       }
       if( typeof arguments[0] === "function" ){
         callback.push( arguments[0] );
@@ -190,6 +191,7 @@ var OSCSocket = module.exports = function(){
     OSCSocket.prototype._onListening = function(){
         var address = this._socket.address();
         this._bound = true;
+        this._socket.setBroadcast(this._useBroadcast);
         console.log("OSCSocket listening " + address.address + ":" + address.port);
     }
 

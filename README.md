@@ -70,9 +70,9 @@ oscSocket.on( "/osc/message/*", function(message){
 ```javascript
 var osc = require('oscsocket');
 var sock = new osc.OscSocket();
-sock.useBroadcast();
+sock.setBroadcast(true);
 sock.bind();
-sock.send( msg, "127.0.0.1", 10000 );
+sock.send( msg, 10000, "192.168.0.255" );
 ```
 
 API
