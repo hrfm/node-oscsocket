@@ -129,7 +129,6 @@ var OSCSocket = module.exports = function(){
     OSCSocket.prototype.send = function( packet, port, address, callback ) {
       if( typeof address === "undefined" ){ address == "0.0.0.0" }
       var buf = packet.buffer;
-      console.log(buf);
       this._socket.send( buf, 0, buf.length, port, address, callback );
     }
 
