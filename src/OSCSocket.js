@@ -322,7 +322,8 @@ var OSCSocket = module.exports = function(){
                 "srcAddress" : obj.srcAddress,
                 "srcPort"    : obj.srcPort,
                 "address"    : obj.address,
-                "values"     : obj.values
+                "values"     : obj.values,
+                "timestamp"  : obj.timestamp
             }];
             
             this._checkEmitList(
@@ -372,7 +373,7 @@ var OSCSocket = module.exports = function(){
             obj.srcPort    = srcPort;
             obj.address    = "/"+address.join("/");
             obj.values     = values;
-
+            
             list.push( obj );
 
             return;
