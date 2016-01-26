@@ -176,8 +176,10 @@ var OSCMessage = module.exports = function( oscString ){
         
         this.address = addr;
 
-        for ( var i = 0, len = type.length - 1; i < len; i++ ) {
-            this.addArgument( type.charAt(i + 1), vals[i] );
+        if( type ){
+            for ( var i = 0, len = type.length - 1; i < len; i++ ) {
+                this.addArgument( type.charAt(i + 1), vals[i] );
+            }
         }
-
+        
 	}
