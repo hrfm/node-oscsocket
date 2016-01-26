@@ -57,7 +57,10 @@ var OSCMessage = module.exports = function( oscString ){
         return this._address;
     });
     OSCMessage.prototype.__defineSetter__('address',function( value ){
-        this._address = value;
+        if( this._address != value ){
+            this._address = value;
+            this._updated = true;
+        }
     });
 
     /** Message Arguments. */
@@ -105,7 +108,7 @@ var OSCMessage = module.exports = function( oscString ){
 	        this._updated = false;
 
     	}
-
+        
         return this._buffer;
 
     });
@@ -125,13 +128,22 @@ var OSCMessage = module.exports = function( oscString ){
         switch( type ) {
             case "f":
             case "i":
+                if( typeof value === "undefined" || isNaN(value) ){
+                    value = 0;
+                }
             	this._argSize += 4;
                 break;
             case "d":
+                if( typeof value === "undefined" || isNaN(value) ){
+                    value = 0;
+                }
             	this._argSize += 8;
             	break;
             case "s":
             case "b":
+                if( typeof value === "undefined" ){
+                    value = "";
+                }
 		        this._argSize += Math.ceil( (value.length+1)/4.0 ) * 4.0;
                 break;
             default :

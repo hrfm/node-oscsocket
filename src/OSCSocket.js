@@ -290,9 +290,11 @@ var OSCSocket = module.exports = function(){
      */
     OSCSocket.prototype._createDispatchFunction = function( msg, rinfo ){
 
-        var key = new Date().getTime() + "_" + Math.floor( Math.random() * 10000 );
+        var timestamp = new Date().getTime();
+        var key = timestamp + "_" + Math.floor( Math.random() * 10000 );
 
         var data = OSCPacket.decode( msg );
+        data.timestamp  = timestamp;
         data.srcAddress = rinfo.address;
         data.srcPort    = rinfo.port;
 
@@ -312,7 +314,7 @@ var OSCSocket = module.exports = function(){
         var obj = this._objectDictionary[key];
         
         if( obj ){
-            
+
             var i, len, tmp;
 
             var list = [{

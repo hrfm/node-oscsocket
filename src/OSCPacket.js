@@ -61,7 +61,7 @@ var OSCPacket = module.exports = function(){
         while( msg[end-1] == 0 ){ end--; }
         
         address = msg.toString( 'utf8', start, end );
-        
+
         // --- check types. ---
         
         start = offset+1;

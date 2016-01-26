@@ -46,4 +46,25 @@ setTimeout(function(){
 	oscMsg.address = "/test/a";
 	oscMsg.addArgument("i", 100 );
 	oscSocket.send( oscMsg, sendPort, sendAddr );
+},1000);
+
+setTimeout(function(){
+	console.log( "Send Osc[ /test ,s test ] to " + sendAddr + ":" + sendPort );
+	var oscMsg = new osc.OSCMessage();
+	oscMsg.address = "/test/b";
+	oscMsg.addArgument("s", "test" );
+	oscSocket.send( oscMsg, sendPort, sendAddr );
+},2000);
+
+setTimeout(function(){
+	console.log( "Send Osc[ /test ] to " + sendAddr + ":" + sendPort );
+	var oscMsg = new osc.OSCMessage();
+	oscMsg.address = "/test/a";
+	oscSocket.send( oscMsg, sendPort, sendAddr );
 },3000);
+
+setTimeout(function(){
+	console.log( "Send Osc[ /test ] to " + sendAddr + ":" + sendPort );
+	var oscMsg = new osc.OSCMessage("/test/a ,s");
+	oscSocket.send( oscMsg, sendPort, sendAddr );
+},4000);
