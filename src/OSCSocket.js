@@ -159,7 +159,7 @@ var OSCSocket = module.exports = function(){
      * @param    listener
      */
     OSCSocket.prototype.off = function( type, listener ){
-        this._emitter.off( type, listener );
+        this._emitter.removeListener( type, listener );
         if( type.indexOf("/") == 0 ){
             var t = type + "$";
             var address = t.substring( 1, t.length ).split("/");
